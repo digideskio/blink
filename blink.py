@@ -84,23 +84,26 @@ class Blink(object):
         assert value > 0, "fps - 'frames per second' must be bigger than 0 - given:{0}".format(fps)
         self._framesPerSecond = value
 
-    def _morseLetter(self, char):
-        long_time = 0.5
-        short_time = 0.25
+    def _morseLetter(self, char, color, short_time, long_time, wait):
         if char in morse_code:
             code = [short_time if c else long_time for c in morse_code[char]]
-            for c in code:
-                self.setColor(COLORS["red"])
+            for i, c in enumerate(code):
+                self.setColor(color)
                 sleep(c)
                 self.turnOff()
-                sleep(short_time)
+                ### wait some time
+                if i < (len(code) - 1):
+                    ### for the last element do not sleep
+                    sleep(wait)
         else:
             self.turnOff()
-        sleep(long_time)
 
-    def morse(self, text_raw):
+    def morse(self, text_raw, color=(255,0,0), short_time=0.2, long_time=0.4, wait=0.5, wait_between_words=0.7):
+        """outputs the given text as morse code"""
         text = text_raw.lower()
-        [self._morseLetter(l) for l in text]
+        for l in text:
+            self._morseLetter(l, color=color, short_time=short_time, long_time=long_time, wait=wait)
+            sleep(wait_between_words)
 
     def setColor(self, color=(0,0,0)):
         """sets the color immediately"""
@@ -129,11 +132,12 @@ def main():
     ### initalize a blink object
     blink = Blink()
 
-    ### how to use the blink object...
+    ### how to use the blink object
     print "blink firmware version: {0}".format(blink.version)
     blink.blink(count=5)
 
-    blink.morse("hello world")
+    ### how to morse some text
+    blink.morse("hello world", (0,255,0))
 
 if __name__ == '__main__':
     try:
