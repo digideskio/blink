@@ -1,7 +1,7 @@
 #!/usr/bin/python
 """
 blink.py -- a high-level 'blink(1)' API by Marco Pashkov
-Based on Aaron Blondeau demo 'blink1hid-demo.py' -> https://github.com/todbot/blink1/tree/master/python
+Based on Aaron Blondeau's demo -> https://github.com/todbot/blink1/tree/master/python/blink1hid-demo.py
 
 Version 0.1 - Feb 21. 2013
 """
