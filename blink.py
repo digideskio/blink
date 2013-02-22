@@ -25,6 +25,7 @@ class Blink(object):
     """Simple python controller for a single 'blink' device"""
 
     def __init__(self, fps=30):
+        """initiate the blink device - set the fps - 'frames per second'"""
         self.dev = usb.core.find(idVendor=0x27b8, idProduct=0x01ed)
         assert self.dev is not None, "Could not find blink device."
         self.bmRequestTypeOut = usb.util.build_request_type(usb.util.CTRL_OUT, usb.util.CTRL_TYPE_CLASS, usb.util.CTRL_RECIPIENT_INTERFACE)
@@ -54,6 +55,7 @@ class Blink(object):
         self.dev.ctrl_transfer(self.bmRequestTypeOut, 0x09, (3 << 8) | 0x01, 0, [0x00, action, _red, _green, _blue, th, tl, 0x00, 0x00])
 
     def blink(self, color=(COLORS["red"]), count=5, fps=5):
+        """let the device blink"""
         old_fps = self.framesPerSecond
         self.framesPerSecond = fps
         for i in range(count):
@@ -63,6 +65,7 @@ class Blink(object):
         self.framesPerSecond = old_fps
 
     def fadeColor(self, color=(0,0,0), sec=1, blocking=True):
+        """fade to a new color"""
         T = (sec * 1000)/10        ###<sec> seconds worth of 10msec tics
         th = (T & 0xff00) >> 8
         tl = T & 0x00ff
