@@ -1,12 +1,13 @@
 blink(1) Python api
 ===================
 
-this is a simple, open source python-wrapper for the [blink(1)](http://thingm.com/products/blink-1.html) device by [thingm](http://thingm.com/)
+This is a simple, open source python-wrapper for the [blink(1)](http://thingm.com/products/blink-1.html) device by [thingm](http://thingm.com/)
+It is based on Aaron Blondeau's [demo](https://github.com/todbot/blink1/tree/master/python/blink1hid-demo.py)
 
 Installation
 -----------
 
-Currently just download the files or clone the git and put them into your python project. In the future I might add a setup.py for an easy global installation.
+Currently just download the files or clone the git and put the library into your Python project. In the future I might add a setup.py for an easy global installation.
 
 Usage
 -----
