@@ -131,9 +131,9 @@ def main():
 
     ### how to use the blink object...
     print "blink firmware version: {0}".format(blink.version)
-    # blink.blink(count=5)
+    blink.blink(count=5)
 
-    blink.morse("sos")
+    blink.morse("hello world")
 
 if __name__ == '__main__':
     try:
