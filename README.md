@@ -1,5 +1,4 @@
-
-Python blink(1) api
+blink(1) Python api
 ===================
 
 this is a simple, open source python-wrapper for the [blink(1)](http://thingm.com/products/blink-1.html) device by [thingm](http://thingm.com/)
