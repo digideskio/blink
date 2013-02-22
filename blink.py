@@ -3,7 +3,7 @@
 blink.py -- a high-level 'blink(1)' API by Marco Pashkov
 Based on Aaron Blondeau's demo -> https://github.com/todbot/blink1/tree/master/python/blink1hid-demo.py
 
-Version 0.1 - Feb 21. 2013
+Version 0.2 - Feb 21. 2013
 """
 
 import usb  ### requires pyusb
@@ -12,6 +12,7 @@ import usb  ### requires pyusb
             # + libusb-win32 (inf method) on windows
 import string
 from time import sleep
+from morse import morse_code
 
 COLORS = {
     "red" : (255,0,0),
@@ -83,6 +84,24 @@ class Blink(object):
         assert value > 0, "fps - 'frames per second' must be bigger than 0 - given:{0}".format(fps)
         self._framesPerSecond = value
 
+    def _morseLetter(self, char):
+        long_time = 0.5
+        short_time = 0.25
+        if char in morse_code:
+            code = [short_time if c else long_time for c in morse_code[char]]
+            for c in code:
+                self.setColor(COLORS["red"])
+                sleep(c)
+                self.turnOff()
+                sleep(short_time)
+        else:
+            self.turnOff()
+        sleep(long_time)
+
+    def morse(self, text_raw):
+        text = text_raw.lower()
+        [self._morseLetter(l) for l in text]
+
     def setColor(self, color=(0,0,0)):
         """sets the color immediately"""
         self._transferCommand(0x6E, color=color)
@@ -105,10 +124,16 @@ class Blink(object):
 
 
 def main():
-    """test function - example, how to use the """
+    """example, how to use the wrapper"""
+
+    ### initalize a blink object
     blink = Blink()
+
+    ### how to use the blink object...
     print "blink firmware version: {0}".format(blink.version)
-    blink.blink(count=10)
+    # blink.blink(count=5)
+
+    blink.morse("sos")
 
 if __name__ == '__main__':
     try:
